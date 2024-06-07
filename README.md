@@ -29,3 +29,7 @@ Read: https://pypi.org/project/pip-tools/
             .pre-commit-config.yaml
 
         pre-commit run --all-files
+
+Make sure that:
+
+export FLASK_APP=northwind.py

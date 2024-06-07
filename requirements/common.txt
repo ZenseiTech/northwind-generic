@@ -31,3 +31,4 @@ WTForms
 email-validator
 pyjwt
 gunicorn
+email-validator

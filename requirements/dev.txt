@@ -10,3 +10,4 @@ requests==2.18.2
 selenium==3.141.0
 urllib3==1.22
 pre-commit
+pip-tools

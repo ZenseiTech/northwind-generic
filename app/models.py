@@ -11,7 +11,7 @@ class Category(db.Model):
     description = db.Column(db.Text())
     picture = db.Column(db.LargeBinary)
 
-    products = db.relationship("Product", backref="role", lazy="dynamic")
+    products = db.relationship("Product", backref="categories", lazy="dynamic")
 
     def __repr__(self):
         """Representation."""
@@ -35,7 +35,7 @@ class Supplier(db.Model):
     fax = db.Column(db.String(64))
     home_page = db.Column(db.String(64))
 
-    products = db.relationship("Product", backref="role", lazy="dynamic")
+    products = db.relationship("Product", backref="suppliers", lazy="dynamic")
 
     def __repr__(self):
         """Representation."""
@@ -86,7 +86,7 @@ class Employee(db.Model):
     reports_to = db.Column(db.Integer, db.ForeignKey("employees.id"))
     photo_path = db.Column(db.String(64))
 
-    orders = db.relationship("Order", backref="order", lazy="dynamic")
+    orders = db.relationship("Order", backref="employees", lazy="dynamic")
 
     def __repr__(self):
         """Representation."""
@@ -109,7 +109,7 @@ class Employee(db.Model):
         country = db.Column(db.String(64), nullable=True)
         phone = db.Column(db.String(64), nullable=True)
         fax = db.Column(db.String(64), nullable=True)
-        orders = db.relationship("Order", backref="order", lazy="dynamic")
+        orders = db.relationship("Order", backref="customers", lazy="dynamic")
 
         def __repr__(self):
             """Representation."""
@@ -123,7 +123,7 @@ class Employee(db.Model):
         id = db.Column(db.Integer, primary_key=True, autoincrement=True)
         company_name = db.Column(db.String(64), nullable=False)
         phone = db.Column(db.String(64), nullable=False)
-        orders = db.relationship("Order", backref="order", lazy="dynamic")
+        orders = db.relationship("Order", backref="shippers", lazy="dynamic")
 
         def __repr__(self):
             """Representation."""
@@ -152,4 +152,4 @@ class Employee(db.Model):
 
         def __repr__(self):
             """Representation."""
-            return f"<Orders {self.order_id} {self.customer_id}>"
+            return f"<Orders {self.id} {self.customer_id}>"
