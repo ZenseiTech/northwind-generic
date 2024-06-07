@@ -98,7 +98,6 @@ def deploy():
     """Run deployment tasks."""
     # migrate database to latest revision
     upgrade()
-    # Order.update_customer_ids()
 
 
 #     # create or update user roles

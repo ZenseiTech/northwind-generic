@@ -152,4 +152,13 @@ class Employee(db.Model):
 
         def __repr__(self):
             """Representation."""
-            return f"<Orders {self.id} {self.customer_id}>"
+            return f"<Orders order.id = {self.id} customer_id: {self.customer_id}>"
+
+    order_details = db.Table(
+        "order_details",
+        db.Column("order_id", db.Integer, db.ForeignKey("orders.id")),
+        db.Column("product_id", db.Integer, db.ForeignKey("products.id")),
+        db.Column("unit_price", db.Float),
+        db.Column("quantity", db.Integer),
+        db.Column("discount", db.Float),
+    )

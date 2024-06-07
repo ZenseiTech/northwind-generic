@@ -38,3 +38,4 @@ def load(db):
     __load_data__(db, "./db_backup/customers.sql")
     __load_data__(db, "./db_backup/shippers.sql")
     __load_data__(db, "./db_backup/orders.sql")
+    __load_data__(db, "./db_backup/order_details.sql")
