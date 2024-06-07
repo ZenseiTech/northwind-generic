@@ -1,3 +1,4 @@
+"""Contains the model to the database."""
 from . import db
 
 
@@ -6,8 +7,7 @@ class Category(db.Model):
 
     __tablename__ = "categories"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    category_name = db.Column(
-        db.String(64), nullable=False, unique=True, index=True)
+    category_name = db.Column(db.String(64), nullable=False, unique=True, index=True)
     description = db.Column(db.Text())
     picture = db.Column(db.LargeBinary)
 
@@ -23,8 +23,7 @@ class Supplier(db.Model):
 
     __tablename__ = "suppliers"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    company_name = db.Column(
-        db.String(64), nullable=False, unique=True, index=True)
+    company_name = db.Column(db.String(64), nullable=False, unique=True, index=True)
     contact_name = db.Column(db.String(64))
     contact_title = db.Column(db.String(64))
     address = db.Column(db.String(64))
@@ -48,8 +47,7 @@ class Product(db.Model):
 
     __tablename__ = "products"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    product_name = db.Column(
-        db.String(64), nullable=False, unique=True, index=True)
+    product_name = db.Column(db.String(64), nullable=False, unique=True, index=True)
     quantity_per_unit = db.Column(db.Integer)
     unit_price = db.Column(db.Float)
     units_in_stock = db.Column(db.Integer)
@@ -100,8 +98,7 @@ class Employee(db.Model):
         __tablename__ = "customers"
 
         id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-        customer_id = db.Column(
-            db.String(64), nullable=False, unique=True, index=True)
+        customer_id = db.Column(db.String(64), nullable=False, unique=True, index=True)
         company_name = db.Column(db.String(64), nullable=False)
         contact_name = db.Column(db.String(64), nullable=False)
         contact_title = db.Column(db.String(64), nullable=False)
