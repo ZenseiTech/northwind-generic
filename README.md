@@ -32,4 +32,10 @@ Read: https://pypi.org/project/pip-tools/
 
 Make sure that:
 
-export FLASK_APP=northwind.py
+    export FLASK_APP=northwind.py
+
+To test:
+
+    flask test
+
+    flask test --coverage

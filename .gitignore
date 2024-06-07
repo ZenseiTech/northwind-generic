@@ -146,6 +146,8 @@ app.db
 ./tmp
 ./build/*
 
+tests/tmp
+tmp
 
 #project specific
 *.xlsx
@@ -164,6 +166,7 @@ logs
 
 *.svg
 *.pdf
+*.sqlite
 
 northwind.sqlite
 ./db_backup/*.sqlite

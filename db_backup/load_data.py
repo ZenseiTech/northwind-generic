@@ -21,12 +21,25 @@ def __load_data__(db, filename):
 
         insert_data_sql = insert_data_sql.replace("0x", "x'").replace("D900,", "D900',")
 
-    with db.get_engine().begin() as conn:
+    with db.engine.begin() as conn:
         try:
             conn.execute(text(insert_data_sql))
+            if "Orders" in insert_data_sql:
+                conn.execute(text("ALTER TABLE orders add cust_id varchar"))
+                conn.execute(text("UPDATE orders SET cust_id = customer_id"))
+                conn.execute(
+                    text(
+                        """
+                        UPDATE orders
+                            SET customer_id = customers.id
+                            FROM customers
+                            WHERE cust_id = customers.customer_id
+                        """
+                    )
+                )
+                conn.execute(text("ALTER TABLE orders drop cust_id"))
         except Exception as e:
             print(e)
-    print("\n\n")
 
 
 def load(db):

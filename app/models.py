@@ -92,73 +92,77 @@ class Employee(db.Model):
         """Representation."""
         return f"<Employees {self.first_name} {self.last_name}>"
 
-    class Customer(db.Model):
-        """Customer model."""
 
-        __tablename__ = "customers"
+class Customer(db.Model):
+    """Customer model."""
 
-        id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-        customer_id = db.Column(db.String(64), nullable=False, unique=True, index=True)
-        company_name = db.Column(db.String(64), nullable=False)
-        contact_name = db.Column(db.String(64), nullable=False)
-        contact_title = db.Column(db.String(64), nullable=False)
-        address = db.Column(db.String(64), nullable=True)
-        city = db.Column(db.String(64), nullable=True)
-        region = db.Column(db.String(64), nullable=True)
-        postal_code = db.Column(db.String(64), nullable=True)
-        country = db.Column(db.String(64), nullable=True)
-        phone = db.Column(db.String(64), nullable=True)
-        fax = db.Column(db.String(64), nullable=True)
-        orders = db.relationship("Order", backref="customers", lazy="dynamic")
+    __tablename__ = "customers"
 
-        def __repr__(self):
-            """Representation."""
-            return f"<Customers {self.company_name} {self.customer_id}>"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    customer_id = db.Column(db.String(64), nullable=False, unique=True, index=True)
+    company_name = db.Column(db.String(64), nullable=False)
+    contact_name = db.Column(db.String(64), nullable=False)
+    contact_title = db.Column(db.String(64), nullable=False)
+    address = db.Column(db.String(64), nullable=True)
+    city = db.Column(db.String(64), nullable=True)
+    region = db.Column(db.String(64), nullable=True)
+    postal_code = db.Column(db.String(64), nullable=True)
+    country = db.Column(db.String(64), nullable=True)
+    phone = db.Column(db.String(64), nullable=True)
+    fax = db.Column(db.String(64), nullable=True)
+    orders = db.relationship("Order", backref="customers", lazy="dynamic")
 
-    class Shipper(db.Model):
-        """Shipper model."""
+    def __repr__(self):
+        """Representation."""
+        return f"<Customers {self.company_name} {self.customer_id}>"
 
-        __tablename__ = "shippers"
 
-        id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-        company_name = db.Column(db.String(64), nullable=False)
-        phone = db.Column(db.String(64), nullable=False)
-        orders = db.relationship("Order", backref="shippers", lazy="dynamic")
+class Shipper(db.Model):
+    """Shipper model."""
 
-        def __repr__(self):
-            """Representation."""
-            return f"<Shippers {self.company_name} {self.phone}>"
+    __tablename__ = "shippers"
 
-    class Order(db.Model):
-        """Order model."""
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    company_name = db.Column(db.String(64), nullable=False)
+    phone = db.Column(db.String(64), nullable=False)
+    orders = db.relationship("Order", backref="shippers", lazy="dynamic")
 
-        __tablename__ = "orders"
+    def __repr__(self):
+        """Representation."""
+        return f"<Shippers {self.company_name} {self.phone}>"
 
-        id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-        order_date = db.Column(db.DateTime(), nullable=False)
-        required_date = db.Column(db.DateTime(), nullable=False)
-        shipped_date = db.Column(db.DateTime(), nullable=True)
-        freight = db.Column(db.Integer, default=0)
-        ship_name = db.Column(db.String(64), nullable=False)
-        ship_address = db.Column(db.String(64), nullable=False)
-        ship_city = db.Column(db.String(64), nullable=False)
-        ship_region = db.Column(db.String(64), nullable=False)
-        ship_postal_code = db.Column(db.String(64), nullable=True)
-        ship_country = db.Column(db.String(64), nullable=False)
 
-        customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"))
-        employee_id = db.Column(db.Integer, db.ForeignKey("employees.id"))
-        ship_via = db.Column(db.Integer, db.ForeignKey("shippers.id"))
+class Order(db.Model):
+    """Order model."""
 
-        def __repr__(self):
-            """Representation."""
-            return f"<Orders order.id = {self.id} customer_id: {self.customer_id}>"
+    __tablename__ = "orders"
 
-    order_details = db.Table(
-        "order_details",
-        db.Column("order_id", db.Integer, db.ForeignKey("orders.id")),
-        db.Column("product_id", db.Integer, db.ForeignKey("products.id")),
-        db.Column("unit_price", db.Float),
-        db.Column("quantity", db.Integer),
-        db.Column("discount", db.Float),
-    )
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    order_date = db.Column(db.DateTime(), nullable=False)
+    required_date = db.Column(db.DateTime(), nullable=False)
+    shipped_date = db.Column(db.DateTime(), nullable=True)
+    freight = db.Column(db.Integer, default=0)
+    ship_name = db.Column(db.String(64), nullable=False)
+    ship_address = db.Column(db.String(64), nullable=False)
+    ship_city = db.Column(db.String(64), nullable=False)
+    ship_region = db.Column(db.String(64), nullable=False)
+    ship_postal_code = db.Column(db.String(64), nullable=True)
+    ship_country = db.Column(db.String(64), nullable=False)
+
+    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"))
+    employee_id = db.Column(db.Integer, db.ForeignKey("employees.id"))
+    ship_via = db.Column(db.Integer, db.ForeignKey("shippers.id"))
+
+    def __repr__(self):
+        """Representation."""
+        return f"<Orders order.id = {self.id} customer_id: {self.customer_id}>"
+
+
+order_details = db.Table(
+    "order_details",
+    db.Column("order_id", db.Integer, db.ForeignKey("orders.id")),
+    db.Column("product_id", db.Integer, db.ForeignKey("products.id")),
+    db.Column("unit_price", db.Float),
+    db.Column("quantity", db.Integer),
+    db.Column("discount", db.Float),
+)
