@@ -1,9 +1,10 @@
 import unittest
 
 from flask import current_app
+from sqlalchemy import select
 
 from app import create_app, db
-from app.models import Order
+from app.models import Order, Product, order_details
 from db_backup import load_data
 
 
@@ -30,3 +31,27 @@ class BasicsTestCase(unittest.TestCase):
     def test_order(self):
         orders = Order.query.filter_by(customer_id="87").all()
         self.assertTrue(len(orders) == 5)
+
+        query = select(Order, Product).join(Product.orders).filter_by(id=10248)
+        results = db.session.execute(query).all()
+
+        for order, product in results:
+            print(f"---==> {order.id} {product.id}")
+
+        print()
+        query = (
+            select(order_details, Product.product_name)
+            .join(Product)
+            .where(order_details.c.order_id == 10248)
+        )
+        print(query)
+        print()
+        values = db.session.execute(query)
+
+        count = 0
+        for value in values:
+            print(value)
+            count = count + 1
+        # print(db.session.query(order_details).join(Order).join(Product).filter(order_details.c.order_id == 10248))
+        # print(values)
+        self.assertTrue(count == 3)

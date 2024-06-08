@@ -57,6 +57,10 @@ class Product(db.Model):
     supplier_id = db.Column(db.Integer, db.ForeignKey("suppliers.id"))
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
 
+    orders = db.relationship(
+        "Order", secondary="order_details", back_populates="products"
+    )
+
     def __repr__(self):
         """Representation."""
         return "<Products %r>" % self.product_name
@@ -152,6 +156,10 @@ class Order(db.Model):
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"))
     employee_id = db.Column(db.Integer, db.ForeignKey("employees.id"))
     ship_via = db.Column(db.Integer, db.ForeignKey("shippers.id"))
+
+    products = db.relationship(
+        "Product", secondary="order_details", back_populates="orders"
+    )
 
     def __repr__(self):
         """Representation."""

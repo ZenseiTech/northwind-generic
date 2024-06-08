@@ -90,7 +90,7 @@ def data_load():
     """Call the load data to database."""
     from db_backup import load_data
 
-    load_data.load(db)
+    load_data.load(db, dropall=True)
 
 
 @app.cli.command()

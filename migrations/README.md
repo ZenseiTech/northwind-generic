@@ -12,3 +12,5 @@ Careful when renaming columns, the created migration script will drop the column
 That is not what you want.
 
 flask load_data > db_backup/logs/log.file 2>&1
+
+flask test > db_backup/logs/log.file 2>&1

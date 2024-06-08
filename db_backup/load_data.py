@@ -42,8 +42,11 @@ def __load_data__(db, filename):
             print(e)
 
 
-def load(db):
+def load(db, dropall=False):
     """Load datas."""
+    if dropall:
+        db.drop_all()
+        db.create_all()
     __load_data__(db, "./db_backup/categories.sql")
     __load_data__(db, "./db_backup/products.sql")
     __load_data__(db, "./db_backup/suppliers.sql")
